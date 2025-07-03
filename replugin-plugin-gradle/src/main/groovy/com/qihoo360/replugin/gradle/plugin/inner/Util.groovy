@@ -20,6 +20,7 @@ package com.qihoo360.replugin.gradle.plugin.inner
 import com.android.build.api.transform.DirectoryInput
 import com.android.build.api.transform.JarInput
 import com.android.build.api.transform.TransformInput
+import com.android.build.gradle.internal.dependency.VariantDependencies
 import com.google.common.base.Charsets
 import com.google.common.hash.Hashing
 import com.qihoo360.replugin.gradle.compat.ScopeCompat
