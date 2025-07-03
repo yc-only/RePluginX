@@ -43,8 +43,20 @@ public class Util {
     static getClassPaths(Project project, Collection<TransformInput> inputs, Set<String> includeJars, Map<String, String> map) {
         def classpathList = []
         // android.jar
-        def androidJarConfig = project.configurations
-                .maybeCreate(VariantDependencies.CONFIG_NAME_ANDROID_APIS)
+        // def androidJarConfig = project.configurations
+        //         .maybeCreate(VariantDependencies.CONFIG_NAME_ANDROID_APIS)
+
+        def configName = null
+        try {
+            // AGP 3.x 兼容方式
+            def variantDepsClass = Class.forName('com.android.build.gradle.internal.dependency.VariantDependencies')
+            configName = variantDepsClass.getField('CONFIG_NAME_ANDROID_APIS').get(null)
+        } catch(ClassNotFoundException | NoSuchFieldException e) {
+            // AGP 4.0+ 使用新常量
+            configName = "_android_apis"  // 新版常量
+        }
+        def androidJarConfig = project.configurations.maybeCreate(configName)
+
         androidJarConfig.description = "Configuration providing various types of Android JAR file"
         def androidJarPath = androidJarConfig.asPath
         classpathList.add(androidJarPath)
