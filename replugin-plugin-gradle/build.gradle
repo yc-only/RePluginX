@@ -51,21 +51,19 @@ sourceSets {
 }
 
 dependencies {
-    // compile classpathExt['android-build-tools']
-    implementation 'com.android.tools.build:gradle:7.4.2'
-    implementation 'org.json:json:20160212'
-    implementation 'org.codehaus.groovy:groovy:2.4.7'
-    implementation 'com.squareup:javapoet:1.5.1'
-    implementation 'com.android.tools.build:transform-api:1.5.0'
-    implementation 'org.javassist:javassist:3.18.2-GA'
-    implementation 'commons-io:commons-io:2.5'
+    // compile 'com.android.tools.build:gradle:2.1.3'
+    compile classpathExt['android-build-tools']
+    compile 'org.json:json:20160212'
+    compile 'org.codehaus.groovy:groovy:2.4.7'
+    compile 'com.squareup:javapoet:1.5.1'
+    compile 'com.android.tools.build:transform-api:1.5.0'
+    compile 'org.javassist:javassist:3.18.2-GA'
+    compile 'commons-io:commons-io:2.5'
 
-    // gradle:7.4.2 也会依赖guava，codec
-    implementation 'com.google.guava:guava:30.1-jre'
-    implementation 'commons-codec:commons-codec:1.11'
+    compile gradleApi()
+    compile localGroovy()
 
-    implementation gradleApi()
-    implementation localGroovy()
+    compile 'com.google.gradle:osdetector-gradle-plugin:1.2.1'
 }
 
 if (project.hasProperty("android")) { // Android libraries
