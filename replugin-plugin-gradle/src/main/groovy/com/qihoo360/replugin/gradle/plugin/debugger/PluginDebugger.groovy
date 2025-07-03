@@ -38,12 +38,11 @@ class PluginDebugger {
         this.project = project
         this.config = config
         this.variant = variant
-        def globalScope = GradleCompat.getVariantGlobalScope(this.variant)
         def variantConfiguration = GradleCompat.getVariantConfiguration(this.variant)
-        String archivesBaseName = GradleCompat.getArchivesBaseName(globalScope)
+        String archivesBaseName = project.archivesBaseName
         String apkBaseName = archivesBaseName + "-" + variantConfiguration.getBaseName()
 
-        File apkDir = new File(globalScope.getBuildDir(), "outputs" + File.separator + "apk")
+        File apkDir = new File(project.getBuildDir(), "outputs" + File.separator + "apk")
 
         String unsigned = (GradleCompat.getSigningConfig(this.variant) == null
                 ? "-unsigned.apk"
@@ -56,7 +55,7 @@ class PluginDebugger {
             apkFile = new File(apkDir, variantConfiguration.getBaseName() + File.separator + apkName)
         }
 
-        adbFile = ScopeCompat.getAdbExecutable(globalScope)
+        adbFile = project.plugins.getPlugin('android').extension.adbExecutable
 
     }
 

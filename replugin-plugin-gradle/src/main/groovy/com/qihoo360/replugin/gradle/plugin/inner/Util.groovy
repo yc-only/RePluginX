@@ -39,11 +39,14 @@ public class Util {
 
     /** 生成 ClassPool 使用的 ClassPath 集合，同时将要处理的 jar 写入 includeJars */
     def
-    static getClassPaths(Project project, def globalScope, Collection<TransformInput> inputs, Set<String> includeJars, Map<String, String> map) {
+    static getClassPaths(Project project, Collection<TransformInput> inputs, Set<String> includeJars, Map<String, String> map) {
         def classpathList = []
-
         // android.jar
-        classpathList.add(getAndroidJarPath(globalScope))
+        def androidJarConfig = project.configurations
+                .maybeCreate(VariantDependencies.CONFIG_NAME_ANDROID_APIS)
+        androidJarConfig.description = "Configuration providing various types of Android JAR file"
+        def androidJarPath = androidJarConfig.asPath
+        classpathList.add(androidJarPath)
 
         // 原始项目中引用的 classpathList
         getProjectClassPath(project, inputs, includeJars, map).each {
